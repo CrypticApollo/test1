@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1920, height=1080">
+  <title>Nova OS</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="accent-indigo wall-aurora">
+  <div id="screen">
+    <div id="wallpaper"></div>
+
+    <!-- Boot -->
+    <div id="boot">
+      <div class="boot-logo"><span>N</span></div>
+      <div class="boot-name">NOVA&nbsp;OS</div>
+      <div class="boot-bar"><i></i></div>
+    </div>
+
+    <!-- Home -->
+    <div id="home" class="layer">
+      <header class="home-head">
+        <div>
+          <div id="greeting" class="greeting">Good evening</div>
+          <div id="clock" class="clock">00:00</div>
+          <div id="date" class="date"></div>
+        </div>
+        <div class="head-right">
+          <div class="pill" id="platform-pill">Preview mode</div>
+          <div class="hints">
+            <span><b class="k red"></b>Ambient</span>
+            <span><b class="k green"></b>Snake</span>
+            <span><b class="k yellow"></b>Settings</span>
+            <span><b class="k blue"></b>System</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="row">
+        <h2>Watch</h2>
+        <div class="track-wrap"><div class="track" id="row-apps"></div></div>
+      </section>
+
+      <section class="row">
+        <h2>Inputs</h2>
+        <div class="track-wrap"><div class="track" id="row-inputs"></div></div>
+      </section>
+
+      <section class="row">
+        <h2>Nova</h2>
+        <div class="track-wrap"><div class="track" id="row-nova"></div></div>
+      </section>
+    </div>
+
+    <!-- Settings -->
+    <div id="layer-settings" class="layer panel-layer">
+      <div class="panel">
+        <h1>Settings</h1>
+        <p class="sub">Use ◀ ▶ or OK to change a setting. BACK closes.</p>
+        <div id="settings-list"></div>
+      </div>
+    </div>
+
+    <!-- System -->
+    <div id="layer-system" class="layer panel-layer">
+      <div class="panel">
+        <h1>System</h1>
+        <p class="sub">About this TV and Nova OS.</p>
+        <dl id="system-info"></dl>
+        <div class="btn-row">
+          <button class="focusable btn" data-action="reload">Restart Nova</button>
+          <button class="focusable btn" data-action="reset">Reset settings</button>
+          <button class="focusable btn" data-action="close">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Snake -->
+    <div id="layer-snake" class="layer">
+      <div class="snake-head">
+        <div>SNAKE</div>
+        <div>Score <b id="snake-score">0</b> &nbsp;·&nbsp; Best <b id="snake-best">0</b></div>
+      </div>
+      <canvas id="snake-canvas" width="1680" height="840"></canvas>
+      <div id="snake-msg" class="snake-msg"></div>
+    </div>
+
+    <!-- Ambient -->
+    <div id="layer-ambient" class="layer">
+      <div id="ambient-clock" class="ambient-clock">
+        <div class="a-time">00:00</div>
+        <div class="a-date"></div>
+      </div>
+    </div>
+
+    <!-- Exit confirm -->
+    <div id="layer-exit" class="layer panel-layer">
+      <div class="panel small">
+        <h1>Leave Nova OS?</h1>
+        <div class="btn-row">
+          <button class="focusable btn" data-action="exit">Exit</button>
+          <button class="focusable btn" data-action="close">Stay</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast"></div>
+  </div>
+
+  <script src="js/luna.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/snake.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+/* Nova OS — designed for a fixed 1920x1080 TV canvas.
+   Kept to CSS that old webOS Chromium (38+) understands: no variables, no grid. */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  background: #05060f;
+  color: #f2f3ff;
+  font-family: "LG Smart UI", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow: hidden;
+  cursor: default;
+}
+
+#screen {
+  position: absolute; left: 0; top: 0;
+  width: 1920px; height: 1080px;
+  overflow: hidden;
+  -webkit-transform-origin: 0 0; transform-origin: 0 0;
+}
+
+/* ---------- Wallpapers ---------- */
+#wallpaper {
+  position: absolute; left: -10%; top: -10%; width: 120%; height: 120%;
+  -webkit-animation: drift 40s ease-in-out infinite alternate;
+  animation: drift 40s ease-in-out infinite alternate;
+}
+.wall-aurora #wallpaper {
+  background: radial-gradient(circle at 20% 20%, #3a1c71 0%, transparent 45%),
+              radial-gradient(circle at 80% 30%, #0f6e8c 0%, transparent 45%),
+              radial-gradient(circle at 50% 90%, #1b5e44 0%, transparent 50%), #05060f;
+}
+.wall-sunset #wallpaper {
+  background: radial-gradient(circle at 25% 80%, #ff6a3d 0%, transparent 45%),
+              radial-gradient(circle at 75% 20%, #9a1750 0%, transparent 50%),
+              radial-gradient(circle at 60% 70%, #3d1e6d 0%, transparent 50%), #12060b;
+}
+.wall-ocean #wallpaper {
+  background: radial-gradient(circle at 30% 30%, #0052d4 0%, transparent 45%),
+              radial-gradient(circle at 70% 75%, #00c9a7 0%, transparent 40%),
+              radial-gradient(circle at 90% 10%, #2d3a8c 0%, transparent 45%), #020814;
+}
+.wall-midnight #wallpaper {
+  background: radial-gradient(circle at 50% 0%, #1c1f3a 0%, transparent 60%), #000;
+}
+@-webkit-keyframes drift { from { -webkit-transform: translate(0,0) scale(1); } to { -webkit-transform: translate(-3%,2%) scale(1.06); } }
+@keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(-3%,2%) scale(1.06); } }
+
+/* ---------- Accent colours ---------- */
+.accent-indigo .focused { box-shadow: 0 0 0 6px #6c7bff, 0 24px 60px rgba(108,123,255,.45); }
+.accent-coral  .focused { box-shadow: 0 0 0 6px #ff6f61, 0 24px 60px rgba(255,111,97,.45); }
+.accent-mint   .focused { box-shadow: 0 0 0 6px #3ee6b0, 0 24px 60px rgba(62,230,176,.45); }
+.accent-gold   .focused { box-shadow: 0 0 0 6px #ffc93c, 0 24px 60px rgba(255,201,60,.45); }
+.accent-pink   .focused { box-shadow: 0 0 0 6px #ff5fd2, 0 24px 60px rgba(255,95,210,.45); }
+.accent-indigo .accent-text { color: #8f9bff; }
+.accent-coral  .accent-text { color: #ff8f84; }
+.accent-mint   .accent-text { color: #6ff0c6; }
+.accent-gold   .accent-text { color: #ffd76a; }
+.accent-pink   .accent-text { color: #ff8be0; }
+
+/* ---------- Boot ---------- */
+#boot {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+  background: #05060f; z-index: 100;
+  display: -webkit-flex; display: flex;
+  -webkit-flex-direction: column; flex-direction: column;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+  -webkit-transition: opacity .8s; transition: opacity .8s;
+}
+#boot.gone { opacity: 0; pointer-events: none; }
+.boot-logo {
+  width: 220px; height: 220px; border-radius: 60px;
+  background: linear-gradient(135deg, #5b6cff, #b44cff 60%, #ff6f91);
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+  font-size: 150px; font-weight: 800; color: #fff;
+  -webkit-animation: pop 1.2s cubic-bezier(.2,1.4,.4,1) both; animation: pop 1.2s cubic-bezier(.2,1.4,.4,1) both;
+  box-shadow: 0 30px 120px rgba(124,92,255,.6);
+}
+.boot-name { margin-top: 48px; font-size: 56px; letter-spacing: 24px; font-weight: 300; opacity: 0;
+  -webkit-animation: fade 1s .6s forwards; animation: fade 1s .6s forwards; }
+.boot-bar { margin-top: 60px; width: 360px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.12); overflow: hidden; }
+.boot-bar i { display: block; height: 100%; width: 0; background: #fff;
+  -webkit-animation: load 1.8s .4s ease-in-out forwards; animation: load 1.8s .4s ease-in-out forwards; }
+@-webkit-keyframes pop { from { -webkit-transform: scale(.3) rotate(-20deg); opacity: 0; } to { -webkit-transform: none; opacity: 1; } }
+@keyframes pop { from { transform: scale(.3) rotate(-20deg); opacity: 0; } to { transform: none; opacity: 1; } }
+@-webkit-keyframes fade { to { opacity: 1; } }
+@keyframes fade { to { opacity: 1; } }
+@-webkit-keyframes load { to { width: 100%; } }
+@keyframes load { to { width: 100%; } }
+
+/* ---------- Layers ---------- */
+.layer {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+  opacity: 0; visibility: hidden;
+  -webkit-transition: opacity .35s, visibility .35s; transition: opacity .35s, visibility .35s;
+}
+.layer.open { opacity: 1; visibility: visible; }
+.panel-layer { background: rgba(3,4,12,.72); z-index: 20;
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center; }
+
+/* ---------- Home ---------- */
+#home { padding: 50px 0 0 0; }
+.home-head {
+  display: -webkit-flex; display: flex;
+  -webkit-justify-content: space-between; justify-content: space-between;
+  -webkit-align-items: flex-end; align-items: flex-end;
+  padding: 0 110px; margin-bottom: 30px;
+}
+.greeting { font-size: 30px; opacity: .75; font-weight: 300; }
+.clock { font-size: 112px; font-weight: 200; line-height: 1; letter-spacing: -4px; margin: 6px 0; }
+.date { font-size: 30px; opacity: .7; }
+.head-right { text-align: right; }
+.pill { display: inline-block; padding: 10px 26px; border-radius: 30px; background: rgba(255,255,255,.1); font-size: 24px; margin-bottom: 22px; }
+.hints span { font-size: 22px; opacity: .7; margin-left: 28px; }
+.k { display: inline-block; width: 18px; height: 18px; border-radius: 4px; margin-right: 10px; vertical-align: -2px; }
+.k.red { background: #ff4d4d; } .k.green { background: #3ddc84; } .k.yellow { background: #ffd23f; } .k.blue { background: #4d8dff; }
+
+.row { margin-bottom: 12px; }
+.row h2 { font-size: 30px; font-weight: 500; padding: 0 110px; margin-bottom: 14px; opacity: .85; }
+.track-wrap { overflow: visible; padding: 0 110px; height: 196px; }
+.track { white-space: nowrap; -webkit-transition: -webkit-transform .35s ease; transition: transform .35s ease; }
+
+.tile {
+  display: inline-block; vertical-align: top; position: relative;
+  width: 290px; height: 170px; margin-right: 34px; border-radius: 26px;
+  overflow: hidden; color: #fff;
+  background: rgba(255,255,255,.08);
+  -webkit-transition: -webkit-transform .2s, box-shadow .2s; transition: transform .2s, box-shadow .2s;
+}
+.tile.focused { -webkit-transform: scale(1.1); transform: scale(1.1); z-index: 2; }
+.tile .t-icon {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  -webkit-justify-content: center; justify-content: center;
+  font-size: 72px; font-weight: 800; letter-spacing: -2px;
+}
+.tile .t-icon img { max-width: 60%; max-height: 60%; }
+.tile .t-label {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 20px;
+  font-size: 24px; font-weight: 500;
+  background: linear-gradient(transparent, rgba(0,0,0,.55));
+}
+
+/* ---------- Panels ---------- */
+.panel {
+  width: 1100px; padding: 70px 80px; border-radius: 40px;
+  background: rgba(18,20,40,.92);
+  box-shadow: 0 40px 140px rgba(0,0,0,.6);
+}
+.panel.small { width: 760px; text-align: center; }
+.panel h1 { font-size: 60px; font-weight: 300; margin-bottom: 10px; }
+.panel .sub { font-size: 26px; opacity: .6; margin-bottom: 40px; }
+
+.setting {
+  display: -webkit-flex; display: flex;
+  -webkit-justify-content: space-between; justify-content: space-between;
+  -webkit-align-items: center; align-items: center;
+  padding: 26px 34px; margin-bottom: 14px; border-radius: 20px;
+  background: rgba(255,255,255,.05); font-size: 30px;
+  -webkit-transition: box-shadow .2s, background .2s; transition: box-shadow .2s, background .2s;
+}
+.setting.focused { background: rgba(255,255,255,.12); }
+.setting .val { font-weight: 600; }
+.setting .val:before { content: "◀  "; opacity: .4; }
+.setting .val:after { content: "  ▶"; opacity: .4; }
+
+dl { font-size: 28px; margin-bottom: 40px; }
+dl div { display: -webkit-flex; display: flex; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+dt { width: 340px; opacity: .6; }
+dd { -webkit-flex: 1; flex: 1; word-break: break-all; }
+
+.btn-row { margin-top: 30px; }
+.btn {
+  font: inherit; font-size: 28px; color: #fff; border: 0; outline: 0;
+  padding: 20px 44px; border-radius: 18px; margin: 0 12px 0 0;
+  background: rgba(255,255,255,.1);
+  -webkit-transition: box-shadow .2s, -webkit-transform .2s; transition: box-shadow .2s, transform .2s;
+}
+.panel.small .btn { margin: 0 12px; }
+.btn.focused { -webkit-transform: scale(1.06); transform: scale(1.06); background: rgba(255,255,255,.18); }
+
+/* ---------- Snake ---------- */
+#layer-snake { background: #04050c; z-index: 30; text-align: center; }
+.snake-head {
+  display: -webkit-flex; display: flex;
+  -webkit-justify-content: space-between; justify-content: space-between;
+  width: 1680px; margin: 60px auto 30px; font-size: 36px; letter-spacing: 4px;
+}
+#snake-canvas { border-radius: 24px; background: #0b0d1c; }
+.snake-msg {
+  position: absolute; left: 0; right: 0; top: 480px;
+  font-size: 54px; font-weight: 300; text-shadow: 0 6px 30px #000;
+}
+
+/* ---------- Ambient ---------- */
+#layer-ambient { background: #000; z-index: 50; }
+.ambient-clock {
+  position: absolute; text-align: center;
+  -webkit-transition: left 3s ease, top 3s ease, opacity 1.5s; transition: left 3s ease, top 3s ease, opacity 1.5s;
+}
+.a-time { font-size: 220px; font-weight: 100; letter-spacing: -6px; line-height: 1; }
+.a-date { font-size: 40px; opacity: .55; margin-top: 10px; }
+
+/* ---------- Toast ---------- */
+#toast {
+  position: absolute; left: 50%; bottom: 70px; z-index: 200;
+  -webkit-transform: translate(-50%, 40px); transform: translate(-50%, 40px);
+  padding: 22px 44px; border-radius: 40px; font-size: 28px;
+  background: rgba(20,22,44,.95); box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  opacity: 0; -webkit-transition: all .3s; transition: all .3s;
+}
+#toast.show { opacity: 1; -webkit-transform: translate(-50%, 0); transform: translate(-50%, 0); }
