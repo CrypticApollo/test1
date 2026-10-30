@@ -1,0 +1,24 @@
+# Your personal data never goes in the repo
+Resume_Original.md
+Resume_Original.pdf
+Resume_*/
+CoverLetter_*/
+*.pdf
+*.docx
+
+# Job-board application folders and your session overlay
+WellFound/
+Jobgether/
+Jobs_applied_*/
+wellFound_session.md
+
+# Application tracking and screenshots
+*.csv
+*.xlsx
+*.png
+
+# Build, editor and OS junk
+__pycache__/
+*.pyc
+.DS_Store
+.vscode/

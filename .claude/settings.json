@@ -1,0 +1,34 @@
+{
+  "enabledPlugins": {
+    "job-hunt-skills@remotivated": true,
+    "proficiently@proficiently": true,
+    "resume-tailor@resume-tailor": true,
+    "linkedin-mcp-server@linkedin-mcp-server": true
+  },
+  "extraKnownMarketplaces": {
+    "remotivated": {
+      "source": {
+        "source": "github",
+        "repo": "Remotivated/job-hunt-skills"
+      }
+    },
+    "proficiently": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/proficientlyjobs/proficiently-claude-skills.git"
+      }
+    },
+    "resume-tailor": {
+      "source": {
+        "source": "github",
+        "repo": "olegvg/resume-tailor-plugin"
+      }
+    },
+    "linkedin-mcp-server": {
+      "source": {
+        "source": "github",
+        "repo": "stickerdaniel/linkedin-mcp-server"
+      }
+    }
+  }
+}

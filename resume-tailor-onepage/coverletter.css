@@ -1,0 +1,7 @@
+@page { size: A4; margin: 22mm 22mm; }
+body { font-family: "STIX Two Text", "Latin Modern Roman", "Times New Roman", serif;
+       font-size: 11pt; line-height: 1.55; color: #222; margin: 0; }
+h1 { font-size: 16pt; margin: 0 0 2pt; }
+h1 + p { font-style: italic; color: #555; margin: 0 0 14pt; }
+p { margin: 0 0 9pt; }
+a { color: inherit; text-decoration: none; }
