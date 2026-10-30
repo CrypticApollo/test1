@@ -26,7 +26,7 @@ Plus: `academic-cv-builder`, `career-changer-translator`, `creative-portfolio-re
 `resume-formatter`, `resume-quantifier`, `resume-section-builder`,
 `resume-version-manager`, `tech-resume-optimizer`.
 
-Also `/grill-me` (stress-test a plan) and `find-skills` (ask "find a skill for X" to search and install more).
+Also `/grill-me` (stress-test a plan), `find-skills` (ask "find a skill for X" to search and install more) and `skill-inspector` (NVIDIA SkillSpector safety check; ask "is this skill safe?").
 
 ## Plugins (enabled in `.claude/settings.json`)
 

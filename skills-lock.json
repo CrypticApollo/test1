@@ -145,6 +145,12 @@
       "skillPath": "skills/salary-negotiation-prep/SKILL.md",
       "computedHash": "f6b35719a68e88861f335871df923aa4239a4ef1f868fb88e011e189a0871203"
     },
+    "skill-inspector": {
+      "source": "NVIDIA/SkillSpector",
+      "sourceType": "github",
+      "skillPath": "skills/skill-inspector/SKILL.md",
+      "computedHash": "7ee4fd8df9f38aa5345b7145e0ac795c28724aab2440c461f35fbc853bbad0dc"
+    },
     "tech-resume-optimizer": {
       "source": "Paramchoudhary/ResumeSkills",
       "sourceType": "github",

@@ -21,3 +21,7 @@ the user says to go ahead despite any concerns raised.
      logging into LinkedIn/email) without asking each time
 4. **Report** in a few lines: Safe / Caution / Unsafe, what it can do, and any
    red flags with the exact file and line. Then install only once it's cleared.
+
+Use the `skill-inspector` skill (NVIDIA SkillSpector) for this check. If the `skillspector`
+CLI is installed, run its static scan (`--no-llm`) as well; if not, say so and do the
+manual review above.
