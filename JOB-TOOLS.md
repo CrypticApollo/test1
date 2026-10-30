@@ -63,3 +63,14 @@ claude mcp add linkedin-jobs --scope project -e MCP_TRANSPORT=stdio -- \
 ## Already connected (no install)
 
 Indeed, ZipRecruiter and Gmail connectors: ask Claude to search jobs directly.
+
+## Safety audit (2026-10-30, manual review, no SkillSpector scan)
+
+All tools passed except these restrictions, enforced in `.claude/settings.json` `permissions.deny`:
+
+- `proficiently:jobsearch-telegram` is **blocked**: it acts on any Telegram message the bot
+  receives without checking the sender, so a stranger could steer Claude or confirm a submission.
+- `crontab` is **blocked**: proficiently asks for `Bash(crontab *)`, which would let Claude
+  schedule any command. Don't add the permissions its skills suggest.
+- linkedin-mcp-server always runs `mcp-server-linkedin@latest` (not pinned) and logs in as you.
+  Use it sparingly.
