@@ -113,14 +113,30 @@
     });
   }
 
+  // Icon paths from the TV are absolute filesystem paths; the webview needs a
+  // file:// scheme to load them. http(s) and file URLs are left untouched.
+  function iconUrl(p) {
+    if (!p) return '';
+    if (/^(https?:|file:|data:)/.test(p)) return p;
+    return 'file://' + p;
+  }
+
   function loadInstalledApps() {
     Luna.listLaunchPoints(function (res) {
-      if (!res.returnValue || !res.launchPoints || !res.launchPoints.length) return;
+      if (!res.returnValue) {
+        toast('App list blocked by webOS: ' + (res.errorText || 'denied'));
+        return;
+      }
+      if (!res.launchPoints || !res.launchPoints.length) {
+        toast('App list empty (' + (res.launchPoints ? 0 : 'no field') + ')');
+        return;
+      }
+      toast('Loaded ' + res.launchPoints.length + ' real apps from TV');
       var skip = /^(com\.nova\.os|com\.webos\.app\.(hdmi|livetv))/;
       var apps = res.launchPoints
         .filter(function (lp) { return !skip.test(lp.id); })
         .map(function (lp) {
-          return { id: lp.id, title: lp.title, icon: lp.largeIcon || lp.icon, bg: lp.bgColor || lp.iconColor || '#1c2040' };
+          return { id: lp.id, title: lp.title, icon: iconUrl(lp.largeIcon || lp.icon), bg: lp.bgColor || lp.iconColor || '#1c2040' };
         });
       if (apps.length) {
         var onHome = $('home').contains(Nav.current());
