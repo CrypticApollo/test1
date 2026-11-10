@@ -26,7 +26,8 @@
     { action: 'snake', title: 'Snake', mark: '◆', bg: 'linear-gradient(135deg,#11998e,#38ef7d)' },
     { action: 'settings', title: 'Settings', mark: '⚙', bg: 'linear-gradient(135deg,#5b6cff,#b44cff)' },
     { action: 'system', title: 'System', mark: 'i', bg: 'linear-gradient(135deg,#ff6f91,#ff9671)' },
-    { id: 'com.palm.app.settings', title: 'TV Settings', mark: '☰', bg: 'linear-gradient(135deg,#434343,#000)' }
+    { id: 'com.palm.app.settings', title: 'TV Settings', mark: '☰', bg: 'linear-gradient(135deg,#434343,#000)' },
+    { action: 'home', title: 'webOS Home', mark: '⌂', bg: 'linear-gradient(135deg,#a8005c,#6a1b9a)' }
   ];
 
   var SETTINGS = [
@@ -254,6 +255,21 @@
     else if (name === 'reload') location.reload();
     else if (name === 'reset') { Store.reset(); applySettings(); toast('Settings reset'); }
     else if (name === 'exit') exitApp();
+    else if (name === 'home') goHome();
+  }
+
+  // Return to LG's own webOS home. Closing the app lands there; we try the
+  // system home launcher first in case this firmware exposes it.
+  function goHome() {
+    if (Luna.available) {
+      toast('Returning to webOS…');
+      Luna.launch('com.webos.app.home', null, function (res) {
+        if (!res.returnValue) exitApp(); // fall back to just closing Nova
+      });
+      setTimeout(exitApp, 1200); // safety net if the launch is silently ignored
+    } else {
+      toast('Preview: would return to webOS home');
+    }
   }
 
   function exitApp() {
