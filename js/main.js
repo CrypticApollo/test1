@@ -123,15 +123,9 @@
 
   function loadInstalledApps() {
     Luna.listLaunchPoints(function (res) {
-      if (!res.returnValue) {
-        toast('App list blocked by webOS: ' + (res.errorText || 'denied'));
-        return;
-      }
-      if (!res.launchPoints || !res.launchPoints.length) {
-        toast('App list empty (' + (res.launchPoints ? 0 : 'no field') + ')');
-        return;
-      }
-      toast('Loaded ' + res.launchPoints.length + ' real apps from TV');
+      // webOS blocks a sideloaded app from reading the installed-app list on a
+      // non-rooted TV, so this quietly keeps the built-in default tiles.
+      if (!res.returnValue || !res.launchPoints || !res.launchPoints.length) return;
       var skip = /^(com\.nova\.os|com\.webos\.app\.(hdmi|livetv))/;
       var apps = res.launchPoints
         .filter(function (lp) { return !skip.test(lp.id); })
