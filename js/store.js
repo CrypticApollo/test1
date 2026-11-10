@@ -5,6 +5,7 @@ var Store = (function () {
     accent: 'indigo',
     wallpaper: 'aurora',
     clock24: true,
+    screensaver: 'fireworks',
     ambientMinutes: 5,
     bootAnimation: true,
     snakeBest: 0

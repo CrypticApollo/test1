@@ -93,6 +93,24 @@
       </div>
     </div>
 
+    <!-- Photo standby -->
+    <div id="layer-photo" class="layer">
+      <div id="photo-img"></div>
+      <div id="photo-clock" class="ambient-clock fw-overlay">
+        <div class="a-time">00:00</div>
+        <div class="a-date"></div>
+      </div>
+    </div>
+
+    <!-- Fireworks standby -->
+    <div id="layer-fireworks" class="layer">
+      <canvas id="fw-canvas" width="1920" height="1080"></canvas>
+      <div id="fw-clock" class="ambient-clock fw-overlay">
+        <div class="a-time">00:00</div>
+        <div class="a-date"></div>
+      </div>
+    </div>
+
     <!-- Exit confirm -->
     <div id="layer-exit" class="layer panel-layer">
       <div class="panel small">
@@ -111,6 +129,7 @@
   <script src="js/store.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/snake.js"></script>
+  <script src="js/fireworks.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

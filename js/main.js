@@ -34,7 +34,8 @@
     { key: 'accent', label: 'Accent colour', values: ['indigo', 'coral', 'mint', 'gold', 'pink'] },
     { key: 'wallpaper', label: 'Wallpaper', values: ['aurora', 'sunset', 'ocean', 'midnight'] },
     { key: 'clock24', label: 'Clock', values: [true, false], names: ['24-hour', '12-hour'] },
-    { key: 'ambientMinutes', label: 'Ambient mode after', values: [0, 2, 5, 10, 30], names: ['Never', '2 min', '5 min', '10 min', '30 min'] },
+    { key: 'screensaver', label: 'Standby screen', values: ['fireworks', 'photo', 'clock'], names: ['Fireworks', 'Photo', 'Drifting clock'] },
+    { key: 'ambientMinutes', label: 'Standby after', values: [0, 2, 5, 10, 30], names: ['Never', '2 min', '5 min', '10 min', '30 min'] },
     { key: 'bootAnimation', label: 'Boot animation', values: [true, false], names: ['On', 'Off'] }
   ];
 
@@ -238,13 +239,53 @@
     c.style.top = Math.round(80 + Math.random() * (1080 - 160 - (c.offsetHeight || 300))) + 'px';
   }
   function openAmbient() {
-    if (topId() === 'layer-ambient') return;
+    if (topId() === 'layer-ambient' || topId() === 'layer-fireworks' || topId() === 'layer-photo') return;
     if (topId() === 'layer-snake') return; // never interrupt a game
+    if (Store.get('screensaver') === 'fireworks') return openFireworks();
+    if (Store.get('screensaver') === 'photo') return openPhoto();
     ambientTick();
     ambientWander();
     var n = 0;
     ambientTimer = setInterval(function () { ambientTick(); if (++n % 20 === 0) ambientWander(); }, 1000);
     openLayer('layer-ambient', { onClose: function () { clearInterval(ambientTimer); } });
+  }
+
+  // Fireworks standby: the particle animation plus a slowly drifting clock.
+  var fwTimer;
+  function fwTick() {
+    var now = new Date();
+    var c = $('fw-clock');
+    c.querySelector('.a-time').textContent = timeString(now);
+    c.querySelector('.a-date').textContent = dateString(now);
+  }
+  function openFireworks() {
+    Fireworks.open();
+    fwTick();
+    var n = 0;
+    fwTimer = setInterval(function () {
+      fwTick();
+      // nudge the clock around now and then (cheap insurance for OLED owners)
+      if (++n % 45 === 0) {
+        var c = $('fw-clock');
+        c.style.bottom = (40 + Math.round(Math.random() * 60)) + 'px';
+        c.style.right = (50 + Math.round(Math.random() * 80)) + 'px';
+      }
+    }, 1000);
+    openLayer('layer-fireworks', { onClose: function () { clearInterval(fwTimer); Fireworks.close(); } });
+  }
+
+  // Photo standby: a full-screen image (assets/standby.jpg) with a slow drift.
+  var photoTimer;
+  function photoTick() {
+    var now = new Date(), c = $('photo-clock');
+    c.querySelector('.a-time').textContent = timeString(now);
+    c.querySelector('.a-date').textContent = dateString(now);
+  }
+  function openPhoto() {
+    $('photo-img').style.backgroundImage = "url('assets/standby.jpg')";
+    photoTick();
+    photoTimer = setInterval(photoTick, 1000);
+    openLayer('layer-photo', { onClose: function () { clearInterval(photoTimer); } });
   }
 
   // ---------- Idle ----------
@@ -317,7 +358,7 @@
     e.preventDefault();
 
     var top = topId();
-    if (top === 'layer-ambient') { closeLayer(); return; } // any key wakes
+    if (top === 'layer-ambient' || top === 'layer-fireworks' || top === 'layer-photo') { closeLayer(); return; } // any key wakes
     if (top === 'layer-snake' && Snake.key(key)) return;
 
     var cur = Nav.current();
@@ -341,7 +382,7 @@
   });
   document.addEventListener('click', function (e) {
     resetIdle();
-    if (topId() === 'layer-ambient') { closeLayer(); return; }
+    if (topId() === 'layer-ambient' || topId() === 'layer-fireworks' || topId() === 'layer-photo') { closeLayer(); return; }
     var el = e.target.closest ? e.target.closest('.focusable') : null;
     if (el) activate(el);
   });
