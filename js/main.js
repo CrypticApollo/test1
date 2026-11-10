@@ -6,10 +6,11 @@
   // Fallback app list for when the TV won't share its installed apps (or in a browser).
   var DEFAULT_APPS = [
     { id: 'netflix', title: 'Netflix', mark: 'N', bg: '#b20710' },
-    { id: 'youtube.leanback.v4', title: 'YouTube', mark: '▶', bg: '#e62117' },
-    { id: 'amazon', title: 'Prime Video', mark: 'prime', bg: '#1a98ff' },
+    { id: 'com.wbd.stream', title: 'Max', mark: 'Max', bg: 'linear-gradient(135deg,#0046ff,#0a1a6b)' },
     { id: 'com.disney.disneyplus-prod', title: 'Disney+', mark: 'D+', bg: '#0b1f5c' },
-    { id: 'spotify-beehive', title: 'Spotify', mark: '♫', bg: '#1db954' },
+    { id: 'amazon', title: 'Prime Video', mark: 'prime', bg: '#1a98ff' },
+    { id: 'youtube.leanback.v4', title: 'YouTube', mark: '▶', bg: '#e62117' },
+    { id: 'ui30', title: 'Rakuten TV', mark: 'R', bg: '#bf0000' },
     { id: 'com.apple.appletv', title: 'Apple TV', mark: 'tv', bg: '#222' },
     { id: 'com.webos.app.browser', title: 'Web Browser', mark: '◎', bg: '#3b4cca' }
   ];
