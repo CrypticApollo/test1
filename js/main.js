@@ -274,18 +274,34 @@
     openLayer('layer-fireworks', { onClose: function () { clearInterval(fwTimer); Fireworks.close(); } });
   }
 
-  // Photo standby: a full-screen image (assets/standby.jpg) with a slow drift.
-  var photoTimer;
+  // Photo standby: a cross-fading slideshow of assets/photos/*.jpg with a
+  // slow Ken Burns drift and the clock in the corner.
+  var PHOTOS = ['assets/photos/1.jpg', 'assets/photos/2.jpg', 'assets/photos/3.jpg',
+                'assets/photos/4.jpg', 'assets/photos/5.jpg'];
+  var photoTimer, photoClockTimer, photoIdx, photoFront;
   function photoTick() {
     var now = new Date(), c = $('photo-clock');
     c.querySelector('.a-time').textContent = timeString(now);
     c.querySelector('.a-date').textContent = dateString(now);
   }
+  function photoShow(i) {
+    var back = photoFront === 'a' ? $('photo-b') : $('photo-a');
+    var front = photoFront === 'a' ? $('photo-a') : $('photo-b');
+    back.style.backgroundImage = "url('" + PHOTOS[i % PHOTOS.length] + "')";
+    back.className = 'photo-slide on';
+    front.className = 'photo-slide';
+    photoFront = photoFront === 'a' ? 'b' : 'a';
+  }
   function openPhoto() {
-    $('photo-img').style.backgroundImage = "url('assets/standby.jpg')";
+    photoFront = 'b'; photoIdx = 0;
+    $('photo-a').className = $('photo-b').className = 'photo-slide';
+    photoShow(photoIdx);
     photoTick();
-    photoTimer = setInterval(photoTick, 1000);
-    openLayer('layer-photo', { onClose: function () { clearInterval(photoTimer); } });
+    photoClockTimer = setInterval(photoTick, 1000);
+    photoTimer = setInterval(function () { photoShow(++photoIdx); }, 8000);
+    openLayer('layer-photo', { onClose: function () {
+      clearInterval(photoTimer); clearInterval(photoClockTimer);
+    } });
   }
 
   // ---------- Idle ----------
